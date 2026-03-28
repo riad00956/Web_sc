@@ -124,14 +124,14 @@ def can_scan(user_id):
     # Check cooldown
     if user['last_scan_time']:
         if time.time() - user['last_scan_time'] < COOLDOWN_SECONDS:
-            return False, f"Please wait {int(COOLDOWN_SECONDS - (time.time() - user['last_scan_time']))} seconds before scanning again."
+            return False, f"Please wait {int(COOLDOWN_SECONDS - (time.time() - user['last_scan_time']))} seconds before scanning again.🖐️🚫"
     # Check daily limit
     if user['role'] == 'free':
         today = date.today().isoformat()
         if user['last_scan_date'] != today:
             user['scans_today'] = 0
         if user['scans_today'] >= DAILY_LIMIT_FREE:
-            return False, f"You have reached your daily scan limit ({DAILY_LIMIT_FREE} scans). Upgrade to VIP for unlimited scans."
+            return False, f"❌You have reached your daily scan limit ({DAILY_LIMIT_FREE} scans). ✅Upgrade to VIP for unlimited scans."
     return True, None
 
 # ----------------------------- Scanner Class -----------------------------
@@ -630,19 +630,17 @@ bot = telebot.TeleBot(TOKEN, threaded=False)
 def start(message):
     user_id = message.from_user.id
     user = get_user(user_id)
-    text = f"Welcome to WebsiteGrandMaster Bot!\nYour role: {user['role']}\nToday's scans: {user['scans_today']}/{DAILY_LIMIT_FREE if user['role']=='free' else '∞'}\n\nUse /help to see available commands."
+    text = f"Welcome to Web Scanner Bot💀💔!\n👉Your role: {user['role']}\nℹ️Today's scans: {user['scans_today']}/{DAILY_LIMIT_FREE if user['role']=='free' else '∞'}\n\n🆘Use /help to see available commands.\n\n✅Any Problem contact owner: @zerox6t9 "
     bot.reply_to(message, text)
 
 @bot.message_handler(commands=['help'])
 def help_command(message):
     text = (
-        "Available commands:\n"
+        "🌐Available commands:\n"
         "/start - Show your status\n"
         "/help - Show this help\n"
         "/search <url> - Scan a website (e.g., /search https://example.com)\n"
         "/use <key> - Activate a VIP key\n"
-        "/admin - Admin panel (admins only)\n"
-        "/getkey - Generate a new VIP key (admins only)"
     )
     bot.reply_to(message, text)
 
@@ -657,7 +655,7 @@ def search(message):
     # Parse URL
     args = message.text.split(maxsplit=1)
     if len(args) < 2:
-        bot.reply_to(message, "Please provide a URL. Usage: /search https://example.com")
+        bot.reply_to(message, "💥Please provide a URL. Usage: /search https://example.com")
         return
     url = args[1].strip()
     # Validate URL
@@ -668,10 +666,10 @@ def search(message):
         if not parsed.netloc:
             raise ValueError
     except:
-        bot.reply_to(message, "Invalid URL. Please include domain name.")
+        bot.reply_to(message, "❌Invalid URL. Please include domain name.")
         return
     # Start scan in background
-    bot.reply_to(message, f"🔍 Scanning {url}... This may take a few minutes. I'll send the report when done.")
+    bot.reply_to(message, f"🔍 Scanning {url}... This may take a few minutes. I'll send the report when done.✅")
     # Use threading to avoid blocking
     threading.Thread(target=run_scan_thread, args=(message, user_id, url)).start()
 
@@ -709,20 +707,20 @@ def use_key(message):
     user_id = message.from_user.id
     args = message.text.split(maxsplit=1)
     if len(args) < 2:
-        bot.reply_to(message, "Please provide a key. Usage: /use KEY")
+        bot.reply_to(message, "👉Please provide a key. Usage: /use KEY")
         return
     key = args[1].strip()
     if use_vip_key(key, user_id):
         set_user_role(user_id, 'vip')
         bot.reply_to(message, "🎉 Congratulations! You are now a VIP user. Unlimited scans unlocked.")
     else:
-        bot.reply_to(message, "Invalid or already used key.")
+        bot.reply_to(message, "💔Invalid or already used key.")
 
 @bot.message_handler(commands=['admin'])
 def admin_panel(message):
     user_id = message.from_user.id
     if user_id not in ADMIN_IDS:
-        bot.reply_to(message, "You are not authorized to use this command.")
+        bot.reply_to(message, "😂You are not authorized to use this command.")
         return
     # Show admin panel
     text = "Admin Panel\n\n"
@@ -735,16 +733,16 @@ def admin_panel(message):
 def getkey(message):
     user_id = message.from_user.id
     if user_id not in ADMIN_IDS:
-        bot.reply_to(message, "You are not authorized to use this command.")
+        bot.reply_to(message, "😂You are not authorized to use this command.")
         return
     key = generate_vip_key()
-    bot.reply_to(message, f"New VIP key generated:\n`{key}`\n\nShare this key with users. They can use it with /use KEY", parse_mode='Markdown')
+    bot.reply_to(message, f"💀New VIP key generated:\n`{key}`\n\nShare this key with users. They can use it with /use KEY", parse_mode='Markdown')
 
 @bot.message_handler(commands=['stats'])
 def stats(message):
     user_id = message.from_user.id
     if user_id not in ADMIN_IDS:
-        bot.reply_to(message, "You are not authorized to use this command.")
+        bot.reply_to(message, "😂You are not authorized to use this command.")
         return
     conn = sqlite3.connect(DB_FILE)
     c = conn.cursor()
