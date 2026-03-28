@@ -1,3 +1,4 @@
+setuptools
 pyTelegramBotAPI
 flask
 requests
@@ -6,4 +7,3 @@ dnspython
 builtwith
 python-wappalyzer
 beautifulsoup4
-pkg_resources
