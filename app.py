@@ -1,9 +1,3 @@
-#!/usr/bin/env python3
-"""
-WebsiteGrandMaster Telegram Bot
-Advanced website scanner bot with user management, rate limiting, and admin controls.
-"""
-
 import os
 import sys
 import time
@@ -14,7 +8,7 @@ import random
 import string
 import logging
 from datetime import datetime, date, timedelta
-from urllib.parse import urlparse
+from urllib.parse import urlparse, urljoin
 import requests
 import whois
 import socket
