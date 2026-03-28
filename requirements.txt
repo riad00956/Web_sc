@@ -1,0 +1,8 @@
+pyTelegramBotAPI
+flask
+requests
+python-whois
+dnspython
+builtwith
+python-wappalyzer
+beautifulsoup4
