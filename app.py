@@ -25,7 +25,7 @@ from Wappalyzer import Wappalyzer, WebPage
 from flask import Flask, render_template_string
 
 # ----------------------------- Configuration -----------------------------
-TOKEN = "8770219645:AAE8Hf4pVg13CW7jezJ-TMtmCW8mDof0kz4"  # Replace with your bot token
+TOKEN = "8770219645:AAEnepXzfCSqnDc08WGecvwMiOwcnhnQu_I"  # Replace with your bot token
 ADMIN_IDS = [8373846582]  # List of admin user IDs (telegram user IDs)
 DB_FILE = "bot_data.db"
 SCAN_TIMEOUT = 30  # seconds for each request
